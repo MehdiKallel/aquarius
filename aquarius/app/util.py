@@ -144,7 +144,7 @@ def get_did_state(es_instance, chain_id, nft, tx_id, did):
         q = {"bool": {"filter": conditions}}
     else:
         q = {"match_all": {}}
-    return es_instance.es.search(index=es_instance._index, query=q)
+    return es_instance.es.search(index=es_instance.db_index, query=q)
 
 
 def get_retry_queue(es_instance, chain_id, nft, did, retry_type):
@@ -162,5 +162,5 @@ def get_retry_queue(es_instance, chain_id, nft, did, retry_type):
     else:
         q = {"match_all": {}}
     return es_instance.es.search(
-        index=f"{es_instance._index}_retries", query=q, from_=0, size=10000
+        index=f"{es_instance.db_index}_retries", query=q, from_=0, size=10000
     )
